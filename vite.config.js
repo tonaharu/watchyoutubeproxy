@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { faviconPlugin } from "./scripts/vite/faviconPlugin.js";
 
 export default defineConfig({
+  base: './',
   plugins: [vue(), faviconPlugin()],
   resolve: {
     alias: {
