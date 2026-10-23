@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { faviconPlugin } from "./scripts/vite/faviconPlugin.js";
 
 export default defineConfig({
-  base: './',
+  base: '/watchyoutubeproxy/',
   plugins: [vue(), faviconPlugin()],
   resolve: {
     alias: {
