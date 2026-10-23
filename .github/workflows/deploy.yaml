@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ] # 自身のデフォルトブランチ名に合わせてください
+    branches: [ "main" ] # 変更をプッシュするブランチ名（main または master）
 
 permissions:
   contents: read
@@ -18,7 +18,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24-04 # バージョンを固定
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,7 +33,9 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build
+        run: |
+          npm run build
+          cp dist/index.html dist/404.html # ◀ GitHub Pagesで真っ白になるのを防ぐ魔法の1行
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -41,7 +43,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './dist' # ajgpw/siatubeのビルド成果物はdistに出力されます
+          path: './dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
